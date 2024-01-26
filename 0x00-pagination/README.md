@@ -21,4 +21,15 @@ Pagination is widely used in various scenarios:
 
 ## Conclusion
 
-Pagination is a powerful tool for managing large datasets. It improves the efficiency of data retrieval, enhances user experience, and plays a crucial role in the overall design of backend systems. Whether you're working with large databases, designing user interfaces, or building APIs, understanding and implementing pagination greatly benefits your projects.
+Pagination is a powerful tool for managing large datasets. It improves the efficiency of data retrieval, enhances user experience, and plays a crucial role in the overall design of backend systems. Whether you're working with large databases, designing user interfaces, or building APIs, understanding and implementing pagination greatly benefits your projects.i
+
+## Links
+![API Best Practices](https://apibestpractices.info/pagination/cursor-based-pagination)
+
+![Medium Article](https://ignaciochiazzo.medium.com/paginating-requests-in-apis-d4883d4c1c4c)
+
+![REST API design](https://www.moesif.com/blog/technical/api-design/REST-API-Design-Filtering-Sorting-and-Pagination/#pagination)
+
+![Bonus Fireship Models](https://www.youtube.com/watch?v=W2Z7fbCLSTw)
+
+![hashnode Article](https://hoseatonzaifavour.hashnode.dev/pagination-perfected-hypermedia-and-deletion-resilience-for-data-efficiency)
