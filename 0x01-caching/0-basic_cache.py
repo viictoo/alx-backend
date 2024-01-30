@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Cache replacement policies"""
-BaseCaching = __import__("base_caching").BaseCaching
 from typing import Any
+BaseCaching = __import__("base_caching").BaseCaching
 
 
 class BasicCache(BaseCaching):
@@ -26,7 +26,6 @@ class BasicCache(BaseCaching):
         if key in self.cache_data:
             item = self.cache_data[key]
             return item
-
 
     def put(self, key: Any, item: Any) -> None:
         """Put item by key into cache and frequency dictionary.
