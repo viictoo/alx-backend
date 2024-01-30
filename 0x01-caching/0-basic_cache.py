@@ -5,6 +5,11 @@ from typing import Any
 
 
 class BasicCache(BaseCaching):
+    """Basic cache with no Limit
+
+    Args:
+        BaseCaching (class): Base Class
+    """
 
     def __init__(self):
         super().__init__()
