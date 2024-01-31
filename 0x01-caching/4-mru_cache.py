@@ -15,7 +15,6 @@ class MRUCache(BaseCaching):
 
     def __init__(self):
         super().__init__()
-        self.capacity = self.MAX_ITEMS
         self.access = deque()
 
     def get(self, key):
@@ -42,9 +41,9 @@ class MRUCache(BaseCaching):
         """
         if key in self.cache_data:
             self.access.remove(key)
-        elif len(self.cache_data) >= self.capacity:
+        elif len(self.cache_data) >= self.MAX_ITEMS:
             recent = self.access.pop()
-            print("DISCARD: ", recent)
+            print("DISCARD: {}".format(recent))
             del self.cache_data[recent]
         self.cache_data[key] = value
         self.access.append(key)
