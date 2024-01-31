@@ -49,7 +49,7 @@ class LRUCache(BaseCaching):
             oldest = self.access.popleft()
             print("DISCARD: {}".format(oldest))
             del self.cache_data[oldest]
-        self.cache_data[key] = value 
+        self.cache_data[key] = value
         self.access.append(key)
     # def __init__(self):
     #     self.cache_data = OrderedDict()
