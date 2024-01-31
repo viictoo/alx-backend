@@ -1,8 +1,7 @@
 #!/usr/bin/python3
-"""Cache replacement policies"""
+""" Cache replacement policies """
 from collections import defaultdict, deque
 from typing import Any, Dict, Deque
-from time import time_ns
 BaseCaching = __import__("base_caching").BaseCaching
 
 
@@ -18,30 +17,14 @@ class LFUCache(BaseCaching):
         """
         super().__init__()
         self.freq_dict: Dict[int, Deque[Any]] = defaultdict(lambda: deque([]))
-        self.age = time_ns()
         self.hits, self.misses, self.curr_size = 0, 0, 0
 
     def print_cache(self):
-        """ Print the cache
+        """ Print the cache items from the custom dict
         """
         print("Current cache:")
         for key in sorted(self.cache_data.keys()):
             print("{}: {}".format(key, self.cache_data.get(key)[0]))
-
-    def cache_info(self) -> Dict[str, int | None]:
-        """Report cache statistics"""
-        return dict(
-            hits=self.hits,
-            misses=self.misses,
-            MAX_ITEMS=self.MAX_ITEMS,
-            currsize=self.curr_size,
-        )
-
-    def cache_clear(self) -> None:
-        """Clear the cache and cache statistics"""
-        self.cache_data = {}
-        self.freq_dict = defaultdict(lambda: deque([]))
-        self.hits, self.misses, self.curr_size = 0, 0, 0
 
     def update(self, key: Any, value: Any) -> None:
         """Update frequency of key in cache and frequency dictionary.
