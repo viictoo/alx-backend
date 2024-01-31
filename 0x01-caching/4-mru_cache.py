@@ -19,6 +19,14 @@ class MRUCache(BaseCaching):
         self.access = deque()
 
     def get(self, key):
+        """retrieve item from cache
+
+        Args:
+            key (int): item position
+
+        Returns:
+            any: item cached at that key in the dict
+        """
         if key not in self.cache_data:
             return None
         else:
@@ -27,6 +35,12 @@ class MRUCache(BaseCaching):
             return self.cache_data[key]
 
     def put(self, key, value):
+        """insert into cache
+
+        Args:
+            key (int): index
+            value (any): cache item
+        """
         if key in self.cache_data:
             self.access.remove(key)
         elif len(self.cache_data) == self.capacity:
