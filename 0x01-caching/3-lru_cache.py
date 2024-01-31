@@ -45,9 +45,10 @@ class LRUCache(BaseCaching):
         """
         if key in self.cache_data:
             self.access.remove(key)
-        elif len(self.cache_data) > BaseCaching.MAX_ITEMS:
+        elif len(self.cache_data) >= self.MAX_ITEMS:
             oldest = self.access.popleft()
-            print("DISCARD: ", oldest)
+            # print("DISCARD: ", oldest)
+            print("DISCARD: {}".format(oldest))
             del self.cache_data[oldest]
         self.cache_data[key] = value
         self.access.append(key)
