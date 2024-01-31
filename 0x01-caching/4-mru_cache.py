@@ -39,14 +39,15 @@ class MRUCache(BaseCaching):
             key (int): index
             value (any): cache item
         """
-        if key in self.cache_data:
-            self.access.remove(key)
-        elif len(self.cache_data) >= self.MAX_ITEMS:
-            recent = self.access.pop()
-            print("DISCARD: {}".format(recent))
-            del self.cache_data[recent]
-        self.cache_data[key] = value
-        self.access.append(key)
+        if key and value:
+            if key in self.cache_data:
+                self.access.remove(key)
+            elif len(self.cache_data) >= self.MAX_ITEMS:
+                recent = self.access.pop()
+                print("DISCARD: {}".format(recent))
+                del self.cache_data[recent]
+            self.cache_data[key] = value
+            self.access.append(key)
 
 
 if __name__ == "__main__":
