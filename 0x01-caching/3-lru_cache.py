@@ -48,8 +48,8 @@ class LRUCache(BaseCaching):
         elif len(self.cache_data) >= self.MAX_ITEMS:
             oldest = self.access.popleft()
             print("DISCARD: {}".format(oldest))
-            self.cache_data[oldest]
-        self.cache_data[key] = value
+            del self.cache_data[oldest]
+        self.cache_data[key] = value 
         self.access.append(key)
     # def __init__(self):
     #     self.cache_data = OrderedDict()
