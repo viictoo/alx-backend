@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Cache replacement policies"""
 from typing import Any
-from collections import OrderedDict, deque
+from collections import deque
 BaseCaching = __import__("base_caching").BaseCaching
 
 
@@ -16,11 +16,21 @@ class LRUCache(BaseCaching):
     """
 
     def __init__(self):
+        """init method for the class
+        """
         super().__init__()
         self.capacity = self.MAX_ITEMS
         self.access = deque()
 
     def get(self, key):
+        """retrieve item from cache
+
+        Args:
+            key (int): item position
+
+        Returns:
+            any: item cached at that key in the dict
+        """
         if key not in self.cache_data:
             return None
         else:
@@ -29,6 +39,12 @@ class LRUCache(BaseCaching):
             return self.cache_data[key]
 
     def put(self, key, value):
+        """insert into cache
+
+        Args:
+            key (int): index
+            value (any): cache item
+        """
         if key in self.cache_data:
             self.access.remove(key)
         elif len(self.cache_data) == self.capacity:
