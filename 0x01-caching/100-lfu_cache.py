@@ -74,7 +74,7 @@ class LFUCache(BaseCaching):
             self.curr_size += 1
             if self.MAX_ITEMS is not None and self.curr_size > self.MAX_ITEMS:
                 remove_key = self.freq_dict[min(self.freq_dict)].popleft()
-                print("DISCARD: ", remove_key)
+                print("DISCARD: {}".format(remove_key))
                 del self.cache_data[remove_key]
                 self.curr_size -= 1
 
