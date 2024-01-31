@@ -27,12 +27,11 @@ class MRUCache(BaseCaching):
         Returns:
             any: item cached at that key in the dict
         """
-        if key not in self.cache_data:
-            return None
-        else:
+        if key and key in self.cache_data:
             self.access.remove(key)
             self.access.append(key)
             return self.cache_data[key]
+        return None
 
     def put(self, key, value):
         """insert into cache

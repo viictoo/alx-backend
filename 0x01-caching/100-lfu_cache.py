@@ -50,7 +50,7 @@ class LFUCache(BaseCaching):
         Returns:
             (Any)
         """
-        if key in self.cache_data:
+        if key and key in self.cache_data:
             self.hits += 1
             value = self.cache_data[key][0]
             self.update(key, value)
