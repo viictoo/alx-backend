@@ -26,7 +26,7 @@ class LIFOCache(BaseCaching):
         Returns:
             (Any)
         """
-        if key in self.cache_data:
+        if key and key in self.cache_data:
             return self.cache_data[key]
         return None
 
@@ -47,6 +47,7 @@ class LIFOCache(BaseCaching):
                 print("DISCARD: {}".format(first))
             self.que.append(key)
             self.cache_data[key] = value
+
 
 if __name__ == "__main__":
     my_cache = LIFOCache()
