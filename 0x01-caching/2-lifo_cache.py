@@ -13,6 +13,7 @@ class FIFOCache(BaseCaching):
     """
 
     def __init__(self):
+        """ init method for the class"""
         super().__init__()
         self.que: Deque[Any] = deque([])
 
@@ -41,7 +42,7 @@ class FIFOCache(BaseCaching):
             if key in self.cache_data:
                 self.que.remove(key)
             elif len(self.cache_data) >= BaseCaching.MAX_ITEMS:
-                last = self.que.popleft()
+                first = self.que.popleft()
                 del self.cache_data[first]
                 print("DISCARD: {}".format(first))
             self.que.append(key)
