@@ -43,7 +43,7 @@ class LRUCache(BaseCaching):
             key (int): index
             value (any): cache item
         """
-        if value and  key:
+        if key:
             if key in self.cache_data:
                 self.access.remove(key)
             elif len(self.cache_data) >= self.MAX_ITEMS:
