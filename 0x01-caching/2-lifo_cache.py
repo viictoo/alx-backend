@@ -5,7 +5,7 @@ from typing import Any, Tuple, Dict, Deque
 BaseCaching = __import__("base_caching").BaseCaching
 
 
-class FIFOCache(BaseCaching):
+class LIFOCache(BaseCaching):
     """Basic cache with no Limit
 
     Args:
@@ -42,15 +42,14 @@ class FIFOCache(BaseCaching):
             if key in self.cache_data:
                 self.que.remove(key)
             elif len(self.cache_data) >= BaseCaching.MAX_ITEMS:
-                first = self.que.popleft()
+                first = self.que.pop()
                 del self.cache_data[first]
                 print("DISCARD: {}".format(first))
             self.que.append(key)
             self.cache_data[key] = value
 
-
 if __name__ == "__main__":
-    my_cache = FIFOCache()
+    my_cache = LIFOCache()
     my_cache.put("A", "Hello")
     my_cache.put("B", "World")
     my_cache.put("C", "Holberton")
@@ -61,4 +60,6 @@ if __name__ == "__main__":
     my_cache.put("C", "Street")
     my_cache.print_cache()
     my_cache.put("F", "Mission")
+    my_cache.print_cache()
+    my_cache.put("G", "San Francisco")
     my_cache.print_cache()
