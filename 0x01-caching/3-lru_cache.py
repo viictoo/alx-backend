@@ -19,7 +19,6 @@ class LRUCache(BaseCaching):
         """init method for the class
         """
         super().__init__()
-        self.capacity = self.MAX_ITEMS
         self.access = deque()
 
     def get(self, key):
@@ -46,7 +45,7 @@ class LRUCache(BaseCaching):
         """
         if key in self.cache_data:
             self.access.remove(key)
-        elif len(self.cache_data) == self.capacity:
+        elif len(self.cache_data) > BaseCaching.MAX_ITEMS:
             oldest = self.access.popleft()
             print("DISCARD: ", oldest)
             del self.cache_data[oldest]
