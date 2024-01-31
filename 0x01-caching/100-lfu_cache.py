@@ -66,17 +66,18 @@ class LFUCache(BaseCaching):
             key (Any): Argument to function
             value (Any): Result of function
         """
-        if key in self.cache_data:
-            self.update(key, value)
-        else:
-            self.cache_data[key] = (value, 1)
-            self.freq_dict[1].append(key)
-            self.curr_size += 1
-            if self.MAX_ITEMS is not None and self.curr_size > self.MAX_ITEMS:
-                remove_key = self.freq_dict[min(self.freq_dict)].popleft()
-                print("DISCARD: {}".format(remove_key))
-                del self.cache_data[remove_key]
-                self.curr_size -= 1
+        if key and value:
+            if key in self.cache_data:
+                self.update(key, value)
+            else:
+                self.cache_data[key] = (value, 1)
+                self.freq_dict[1].append(key)
+                self.curr_size += 1
+                if self.MAX_ITEMS is not None and self.curr_size > self.MAX_ITEMS:
+                    remove_key = self.freq_dict[min(self.freq_dict)].popleft()
+                    print("DISCARD: {}".format(remove_key))
+                    del self.cache_data[remove_key]
+                    self.curr_size -= 1
 
 
 if __name__ == "__main__":
