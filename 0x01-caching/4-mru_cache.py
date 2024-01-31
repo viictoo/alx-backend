@@ -43,7 +43,7 @@ class MRUCache(BaseCaching):
         """
         if key in self.cache_data:
             self.access.remove(key)
-        elif len(self.cache_data) == self.capacity:
+        elif len(self.cache_data) >= self.capacity:
             recent = self.access.pop()
             print("DISCARD: ", recent)
             del self.cache_data[recent]
