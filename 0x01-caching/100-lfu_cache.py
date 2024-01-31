@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Cache replacement policies"""
 from collections import defaultdict, deque
-from typing import Any, Tuple, Dict, Deque
+from typing import Any, Dict, Deque
 from time import time_ns
 BaseCaching = __import__("base_caching").BaseCaching
 
@@ -14,6 +14,8 @@ class LFUCache(BaseCaching):
     """
 
     def __init__(self):
+        """init method for the class
+        """
         super().__init__()
         self.freq_dict: Dict[int, Deque[Any]] = defaultdict(lambda: deque([]))
         self.age = time_ns()
