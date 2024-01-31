@@ -43,15 +43,14 @@ class LRUCache(BaseCaching):
             key (int): index
             value (any): cache item
         """
-        if key:
-            if key in self.cache_data:
-                self.access.remove(key)
-            elif len(self.cache_data) >= self.MAX_ITEMS:
-                oldest = self.access.popleft()
-                print("DISCARD: {}".format(oldest))
-                self.cache_data[oldest]
-            self.cache_data[key] = value
-            self.access.append(key)
+        if key in self.cache_data:
+            self.access.remove(key)
+        elif len(self.cache_data) >= self.MAX_ITEMS:
+            oldest = self.access.popleft()
+            print("DISCARD: {}".format(oldest))
+            self.cache_data[oldest]
+        self.cache_data[key] = value
+        self.access.append(key)
     # def __init__(self):
     #     self.cache_data = OrderedDict()
     #     self.capacity = self.MAX_ITEMS
