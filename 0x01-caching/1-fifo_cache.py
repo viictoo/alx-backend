@@ -1,12 +1,14 @@
 #!/usr/bin/python3
-"""Cache replacement policies"""
+"""Cache replacement policies FIFO"""
 from collections import defaultdict, deque
-from typing import Any, Tuple, Dict, Deque
+from typing import Any, Deque
 BaseCaching = __import__("base_caching").BaseCaching
 
 
 class FIFOCache(BaseCaching):
-    """Basic cache with no Limit
+    """Basic cache with Limit.
+    Use first in first out eviction policy
+    to free cache when size exceeds capacity
 
     Args:
         BaseCaching (class): Base Class
@@ -17,13 +19,9 @@ class FIFOCache(BaseCaching):
         self.que: Deque[Any] = deque([])
 
     def get(self, key: Any) -> Any:
-        """Get value by key. Updates the hits and misses statistics.
-
+        """Get item by key
         Args:
-            key (Any): Argument to function
-
-        Returns:
-            (Any)
+            key (Any): Index position
         """
         if key in self.cache_data:
             return self.cache_data[key]
@@ -31,11 +29,8 @@ class FIFOCache(BaseCaching):
 
     def put(self, key: Any, value: Any) -> None:
         """Put value by key into cache and frequency dictionary.
-        Check the capacity of the cache and delete the key-value if necessary.
-
-        Args:
-            key (Any): Argument to function
-            value (Any): Result of function
+        Check the capacity of the cache and delete the key-value if
+        necessary
         """
         if key and value:
             if key in self.cache_data:

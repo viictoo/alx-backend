@@ -1,18 +1,16 @@
 #!/usr/bin/python3
 """Cache replacement policies"""
-from typing import Any
 from collections import deque
 BaseCaching = __import__("base_caching").BaseCaching
 
 
 class LRUCache(BaseCaching):
-    """
-    ORDERED DICT = more memory: doubly linked list
-    DEQUE = LIST LIKE CONTAINER
-
+    """Basic cache with Limit.
+    Use Least Recently Used eviction policy
+    to free cache when size exceeds capacity
 
     Args:
-        BaseCaching (_type_): _description_
+        BaseCaching (class): Base Class
     """
 
     def __init__(self):
@@ -22,13 +20,9 @@ class LRUCache(BaseCaching):
         self.access = deque()
 
     def get(self, key):
-        """retrieve item from cache
-
+        """Get item by key
         Args:
-            key (int): item position
-
-        Returns:
-            any: item cached at that key in the dict
+            key (Any): Index position
         """
         if key and key in self.cache_data:
             self.access.remove(key)
@@ -37,11 +31,9 @@ class LRUCache(BaseCaching):
         return None
 
     def put(self, key, value):
-        """insert into cache
-
-        Args:
-            key (int): index
-            value (any): cache item
+        """Put value by key into cache and frequency dictionary.
+        Check the capacity of the cache and delete the key-value if
+        necessary
         """
         if key and value:
             if key in self.cache_data:
@@ -52,26 +44,6 @@ class LRUCache(BaseCaching):
                 del self.cache_data[oldest]
             self.cache_data[key] = value
             self.access.append(key)
-    # def __init__(self):
-    #     self.cache_data = OrderedDict()
-    #     self.capacity = self.MAX_ITEMS
-
-    # def get(self, key: Any) -> Any:
-    #     if key not in self.cache_data:
-    #         return None
-    #     value = self.cache_data.pop(key)
-    #     self.cache_data[key] = value
-    #     return value
-
-    # def put(self, key: Any, value: Any) -> None:
-    #     if key in self.cache_data:
-    #         self.cache_data.pop(key)
-    #         # least = self.cache_data.pop(key)
-    #         # print("DISCARD: ", least)
-    #     elif len(self.cache_data) >= self.capacity:
-    #         least = self.cache_data.popitem(last=False)
-    #         print("DISCARD: ", least[0])
-    #     self.cache_data[key] = value
 
 
 if __name__ == "__main__":

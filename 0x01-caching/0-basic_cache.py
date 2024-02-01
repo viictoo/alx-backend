@@ -6,7 +6,6 @@ BaseCaching = __import__("base_caching").BaseCaching
 
 class BasicCache(BaseCaching):
     """Basic cache with no Limit
-
     Args:
         BaseCaching (class): Base Class
     """
@@ -15,25 +14,18 @@ class BasicCache(BaseCaching):
         super().__init__()
 
     def get(self, key: Any) -> Any:
-        """Get item by key. Updates the hits and misses statistics.
-
+        """Get item by key
         Args:
-            key (Any): Argument to function
-
-        Returns:
-            (Any)
+            key (Any): Index position
         """
         if key in self.cache_data:
-            item = self.cache_data[key]
-            return item
+            return self.cache_data[key]
 
     def put(self, key: Any, item: Any) -> None:
         """Put item by key into cache and frequency dictionary.
-        Check the capacity of the cache and delete the key-item if necessary.
-
         Args:
-            key (Any): Argument to function
-            item (Any): Result of function
+            key (Any): index position
+            item (Any): value to insert at index
         """
         if key and item:
             self.cache_data[key] = item

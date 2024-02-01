@@ -1,16 +1,16 @@
 #!/usr/bin/python3
 """Cache replacement policies"""
-from collections import OrderedDict, deque
-from typing import Any
+from collections import deque
 BaseCaching = __import__("base_caching").BaseCaching
 
 
 class MRUCache(BaseCaching):
-    """
-    ORDERED DICT = more memory: doubly linked list
-    DEQUE = LIST LIKE CONTAINER
+    """Basic cache with Limit.
+    Use Most Recently Used eviction policy
+    to free cache when size exceeds capacity
+
     Args:
-        BaseCaching (BASE CLASS): parent class
+        BaseCaching (class): Base Class
     """
 
     def __init__(self):
@@ -18,13 +18,9 @@ class MRUCache(BaseCaching):
         self.access = deque()
 
     def get(self, key):
-        """retrieve item from cache
-
+        """Get item by key
         Args:
-            key (int): item position
-
-        Returns:
-            any: item cached at that key in the dict
+            key (Any): Index position
         """
         if key and key in self.cache_data:
             self.access.remove(key)
@@ -33,11 +29,9 @@ class MRUCache(BaseCaching):
         return None
 
     def put(self, key, value):
-        """insert into cache
-
-        Args:
-            key (int): index
-            value (any): cache item
+        """Put value by key into cache and frequency dictionary.
+        Check the capacity of the cache and delete the key-value if
+        necessary
         """
         if key and value:
             if key in self.cache_data:

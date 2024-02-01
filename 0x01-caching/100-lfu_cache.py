@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 """ Cache replacement policies """
-from collections import defaultdict, deque
-from typing import Any, Dict, Deque
+from typing import Any, Dict
 BaseCaching = __import__("base_caching").BaseCaching
 
 
 class LFUCache(BaseCaching):
-    """Least Frequently Used
+    """Basic cache with Limit.
+    Use Least Frequently Used eviction policy
+    to free cache when size exceeds capacity
 
     Args:
         BaseCaching (class): Base Class
@@ -16,68 +17,38 @@ class LFUCache(BaseCaching):
         """init method for the class
         """
         super().__init__()
-        self.freq_dict: Dict[int, Deque[Any]] = defaultdict(lambda: deque([]))
-        self.hits, self.misses, self.curr_size = 0, 0, 0
-
-    def print_cache(self):
-        """ Print the cache items from the custom dict
-        """
-        print("Current cache:")
-        for key in sorted(self.cache_data.keys()):
-            print("{}: {}".format(key, self.cache_data.get(key)[0]))
-
-    def update(self, key: Any, value: Any) -> None:
-        """Update frequency of key in cache and frequency dictionary.
-        Removes key in frequency dictionary if necessary.
-
-        Args:
-            key (Any): Argument to function
-            value (Any): Result of function
-        """
-        _, freq = self.cache_data[key]
-        self.cache_data[key] = (value, freq + 1)
-        self.freq_dict[freq].remove(key)
-        self.freq_dict[freq + 1].append(key)
-        if not len(self.freq_dict[freq]):
-            del self.freq_dict[freq]
+        self.freq_dict: Dict = {}
 
     def get(self, key: Any) -> Any:
-        """Get value by key. Updates the hits and misses statistics.
-
+        """Get item by key
         Args:
-            key (Any): Argument to function
-
-        Returns:
-            (Any)
+            key (Any): Index position
         """
         if key and key in self.cache_data:
-            self.hits += 1
-            value = self.cache_data[key][0]
-            self.update(key, value)
+            self.freq_dict[key] += 1
+            value = self.cache_data[key]
             return value
-        self.misses += 1
         return None
 
     def put(self, key: Any, value: Any) -> None:
-        """Put value by key into cache and frequency dictionary.
-        Check the capacity of the cache and delete the key-value if necessary.
-
+        """ Put value by key into cache and frequency dictionary.
+            Check the cache size and delete the key-value if necessary.
+            -   discard the least frequency used item (LFU algorithm)
+            -   if you there is more than 1 item to discard,
+                use the LRU algorithm to discard only the least recently used
         Args:
-            key (Any): Argument to function
-            value (Any): Result of function
+            key (Any): cache index
+            value (Any): cache data
         """
         if key and value:
-            if key in self.cache_data:
-                self.update(key, value)
-            else:
-                self.cache_data[key] = (value, 1)
-                self.freq_dict[1].append(key)
-                self.curr_size += 1
-                if self.MAX_ITEMS is not None and self.curr_size > self.MAX_ITEMS:
-                    remove_key = self.freq_dict[min(self.freq_dict)].popleft()
-                    print("DISCARD: {}".format(remove_key))
-                    del self.cache_data[remove_key]
-                    self.curr_size -= 1
+            if len(self.cache_data) >= self.MAX_ITEMS:
+                LFU = min(self.freq_dict, key=self.freq_dict.get)
+                self.cache_data.pop(LFU)
+                print("DISCARD: {}".format(LFU))
+                self.freq_dict.pop(LFU)
+            if key not in self.freq_dict:
+                self.freq_dict[key] = 0
+            self.cache_data[key] = value
 
 
 if __name__ == "__main__":
