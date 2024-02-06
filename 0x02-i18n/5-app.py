@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Mock logging in with basic flask app"""
 
 from flask import Flask, render_template, request, g

@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Use user locale with basic flask app"""
 from flask import Flask, render_template, request, g
 from flask_babel import Babel

@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Force locale with URL parameter"""
 
 from flask import Flask, render_template, request

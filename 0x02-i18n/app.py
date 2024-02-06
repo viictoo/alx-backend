@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Display the current time with basic flask app"""
 # from datetime import timezone as dtz
 from flask import Flask, render_template, request, g
