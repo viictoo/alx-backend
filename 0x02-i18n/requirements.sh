@@ -1,1 +1,0 @@
-pip install -y flask locale pytz Babel
