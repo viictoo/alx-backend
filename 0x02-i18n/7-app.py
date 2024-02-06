@@ -58,8 +58,8 @@ def before_request():
     g.time = cleaned_time.strftime(formatted_time)
 
 
-# @babel.localeselector
-def get_locale():
+@babel.localeselector
+def get_locale() -> str:
     """function to use a user’s preferred local if it is supported.
     The order of priority:
 
@@ -88,7 +88,7 @@ def get_locale():
 
 
 @babel.timezoneselector
-def get_timezone():
+def get_timezone() -> str:
     """function to use a user’s preferred local if it is supported.
     The order of priority:
 
@@ -118,7 +118,7 @@ def get_timezone():
 
 
 @app.route('/', strict_slashes=False)
-def root():
+def root() -> str:
     """base route
 
     Returns:

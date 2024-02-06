@@ -31,7 +31,7 @@ class Config(object):
 app.config.from_object(Config)
 
 
-def get_user():
+def get_user() -> str:
     """ function that returns a user dictionary or None if
     the ID cannot be found or if login_as was not passed.
     """
@@ -52,7 +52,7 @@ def before_request():
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """function to use a user’s preferred local if it is supported.
     The order of priority:
 
@@ -81,7 +81,7 @@ def get_locale():
 
 
 @babel.timezoneselector
-def get_timezone():
+def get_timezone() -> str:
     """function to use a user’s preferred local if it is supported.
     The order of priority:
 
@@ -112,7 +112,7 @@ def get_timezone():
 
 
 @app.route('/', strict_slashes=False)
-def root():
+def root() -> str:
     """base route
 
     Returns:
