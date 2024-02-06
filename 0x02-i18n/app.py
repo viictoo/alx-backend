@@ -1,10 +1,10 @@
 #!/usr/bin/python3
-"""Use user locale with basic flask app"""
+"""Display the current time with basic flask app"""
+# from datetime import timezone as dtz
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
-from datetime import datetime
 import locale
-from pytz import timezone as pyzone, exceptions, utc
+from pytz import timezone as pyzone, exceptions
 
 app = Flask(__name__)
 
@@ -49,16 +49,9 @@ def before_request():
     identify and set a user session
     """
     g.user = get_user()
-    raw_time = utc.localize(datetime.utcnow())
-    print("time now = ", raw_time)
-    cleaned_time = raw_time.astimezone(pyzone(get_timezone()))
-    print("cleaned_ time = ", cleaned_time)
-    locale.setlocale(locale.LC_TIME, (get_locale(), 'UTF-8'))
-    formatted_time = "%b %d, %Y %I:%M:%S %p"
-    g.time = cleaned_time.strftime(formatted_time)
 
 
-# @babel.localeselector
+@babel.localeselector
 def get_locale():
     """function to use a user’s preferred local if it is supported.
     The order of priority:
@@ -100,19 +93,20 @@ def get_timezone():
     Returns:
         str: best language match
         """
-    tzone = request.args.get('timezone')
-    if tzone:
+    curr_time = request.args.get('timezone')
+    if curr_time:
         try:
-            return pyzone(tzone).zone
+            return pyzone(curr_time).zone
         except exceptions.UnknownTimeZoneError:
             pass
     if g.user:
         try:
-            tzone = g.user.get('timezone')
-            return pyzone(tzone).zone
+            curr_time = g.user.get('timezone')
+            return pyzone(curr_time).zone
         except exceptions.UnknownTimeZoneError:
             pass
     return app.config['BABEL_DEFAULT_TIMEZONE']
+
 
 # babel.init_app(app, locale_selector=get_locale)
 
@@ -124,7 +118,7 @@ def root():
     Returns:
         template: page presentation
     """
-    return render_template('index.html')
+    return render_template('7-index.html')
 
 
 if __name__ == "__main__":
