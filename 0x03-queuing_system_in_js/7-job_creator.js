@@ -3,6 +3,7 @@ var kiu = require('kue')
 
 const queue = kiu.createQueue()
 
+// ['4153518780', '4153518781']
 const jobs = [
   {
     phoneNumber: '4153518780',
